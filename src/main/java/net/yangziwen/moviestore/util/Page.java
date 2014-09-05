@@ -44,4 +44,10 @@ public class Page<E> {
 		this.list = list;
 	}
 	
+	public static <T> Page<T> transform(org.springframework.data.domain.Page<T> jpaPage) {
+		return new Page<T>(jpaPage.getNumber() * jpaPage.getSize()
+				, jpaPage.getSize()
+				, Long.valueOf(jpaPage.getTotalElements()).intValue()
+				, jpaPage.getContent());
+	}
 }

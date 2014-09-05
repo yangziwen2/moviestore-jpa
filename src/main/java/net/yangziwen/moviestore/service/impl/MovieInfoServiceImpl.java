@@ -52,7 +52,7 @@ public class MovieInfoServiceImpl implements IMovieInfoService {
 	
 	@Override
 	public Page<MovieInfo> getMovieInfoPaginateResult(int start, int limit, final Map<String, Object> param) {
-		org.springframework.data.domain.Page<MovieInfo> page =  movieInfoJpaDao.findAll(new Specification<MovieInfo>() {
+		org.springframework.data.domain.Page<MovieInfo> jpaPage =  movieInfoJpaDao.findAll(new Specification<MovieInfo>() {
 			@Override
 			public Predicate toPredicate(Root<MovieInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> restrictions = new ArrayList<Predicate>();
@@ -82,7 +82,7 @@ public class MovieInfoServiceImpl implements IMovieInfoService {
 					.getRestriction();
 			}
 		}, new PageRequest(start / limit, limit));
-		return new Page<MovieInfo>(start, limit, Long.valueOf(page.getTotalElements()).intValue(), page.getContent());
+		return Page.transform(jpaPage);
 	}
 	
 	@Override
