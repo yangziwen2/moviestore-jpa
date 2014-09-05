@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.yangziwen.moviestore.dao.IMovieInfoDao;
 import net.yangziwen.moviestore.dao.base.DaoConstant;
+import net.yangziwen.moviestore.dao.impl.jpa.IMovieInfoJpaDao;
 import net.yangziwen.moviestore.pojo.MovieInfo;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.service.IMovieInfoService;
@@ -20,15 +21,18 @@ public class MovieInfoServiceImpl implements IMovieInfoService {
 	
 	@Autowired
 	private IMovieInfoDao movieInfoDao;
-
+	
+	@Autowired
+	private IMovieInfoJpaDao movieInfoJpaDao;
+	
 	@Override
 	public MovieInfo getMovieInfoById(Long id) {
-		return movieInfoDao.getById(id);
+		return movieInfoJpaDao.findOne(id);
 	}
 	
 	@Override
 	public void saveOrUpdateMovieInfo(MovieInfo movieInfo) {
-		movieInfoDao.saveOrUpdate(movieInfo);
+		movieInfoJpaDao.save(movieInfo);
 	}
 
 	@Override
