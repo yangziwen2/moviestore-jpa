@@ -10,7 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import net.yangziwen.moviestore.dao.impl.jpa.MovieInfoJpaDao;
+import net.yangziwen.moviestore.dao.MovieInfoJpaDao;
 import net.yangziwen.moviestore.pojo.MovieInfo;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.service.IMovieInfoService;

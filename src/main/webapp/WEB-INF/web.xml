@@ -8,9 +8,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath*:/applicationContext.xml
-			classpath*:/applicationContext-hibernate.xml
-			classpath*:/applicationContext-jpa.xml
+			classpath*:/applicationContext*.xml
 		</param-value>
 	</context-param>
 	<context-param>
@@ -49,22 +47,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- 此filter只能用在tomcat服务器上，比较受限制 -->
-	<!-- see http://tomcat.apache.org/tomcat-7.0-doc/config/filter.html#Expires_Filter -->
-	<!-- <filter>
-		<filter-name>ExpiresFilter</filter-name>
-		<filter-class>org.apache.catalina.filters.ExpiresFilter</filter-class>
-		<init-param>
-			<param-name>ExpiresDefault</param-name>
-			<param-value>access plus 8 hours</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>ExpiresFilter</filter-name>
-		<url-pattern>/movie/mockPhotoReferer1</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping> -->
-
 	<filter>
 		<filter-name>Character Encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -80,16 +62,6 @@
 	<filter-mapping>
 		<filter-name>Character Encoding</filter-name>
 		<url-pattern>/</url-pattern>
-	</filter-mapping>
-
-	<!-- 将hibernate的session绑定到request的线程上 -->
-	<filter>
-		<filter-name>openSessionInViewFilter</filter-name>
-		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>openSessionInViewFilter</filter-name>
-		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
 	<session-config>

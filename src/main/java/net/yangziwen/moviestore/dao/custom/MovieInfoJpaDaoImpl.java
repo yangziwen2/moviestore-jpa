@@ -1,4 +1,4 @@
-package net.yangziwen.moviestore.dao.impl.jpa;
+package net.yangziwen.moviestore.dao.custom;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * This convention is really obscure!
  */
 @Repository
-public class MovieInfoJpaDaoImpl implements MovieInfoRepositoryCustom {
+public class MovieInfoJpaDaoImpl implements MovieInfoJpaCustomRepository {
 	
 	@PersistenceContext
 	private EntityManager entityManager;

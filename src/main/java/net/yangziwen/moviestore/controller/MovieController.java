@@ -3,12 +3,12 @@ package net.yangziwen.moviestore.controller;
 import java.util.List;
 import java.util.Map;
 
-import net.yangziwen.moviestore.dao.base.DaoConstant;
 import net.yangziwen.moviestore.pojo.MovieInfo;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.service.IMovieInfoService;
 import net.yangziwen.moviestore.service.IWebsiteService;
 import net.yangziwen.moviestore.util.CommonConstant;
+import net.yangziwen.moviestore.util.DaoConstant;
 import net.yangziwen.moviestore.util.Page;
 
 import org.apache.commons.lang3.StringUtils;

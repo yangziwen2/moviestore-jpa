@@ -7,7 +7,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.yangziwen.moviestore.dao.impl.jpa.MovieInfoJpaDao;
+import net.yangziwen.moviestore.dao.MovieInfoJpaDao;
 import net.yangziwen.moviestore.pojo.MovieInfo;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.test.SpringJpaPersistenceTests;

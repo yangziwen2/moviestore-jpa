@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import net.yangziwen.moviestore.dao.impl.jpa.WebsiteJpaDao;
+import net.yangziwen.moviestore.dao.WebsiteJpaDao;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.test.SpringJpaPersistenceTests;
 

@@ -1,4 +1,4 @@
-package net.yangziwen.moviestore.dao.base;
+package net.yangziwen.moviestore.util;
 
 public class DaoConstant {
 

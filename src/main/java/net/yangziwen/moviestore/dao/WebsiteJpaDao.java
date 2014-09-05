@@ -1,4 +1,4 @@
-package net.yangziwen.moviestore.dao.impl.jpa;
+package net.yangziwen.moviestore.dao;
 
 import net.yangziwen.moviestore.pojo.Website;
 

@@ -14,7 +14,7 @@
     	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
     	http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd">
 
-	<context:component-scan base-package="net.yangziwen.moviestore.dao.impl.jpa"></context:component-scan>
+	<context:component-scan base-package="net.yangziwen.moviestore.dao"></context:component-scan>
 
 	<!-- Jpa Entity Manager 配置 -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -31,7 +31,7 @@
 		</property>
 	</bean>
 	
-	<jpa:repositories base-package="net.yangziwen.moviestore.dao.impl.jpa" 
+	<jpa:repositories base-package="net.yangziwen.moviestore.dao" 
 		transaction-manager-ref="jpaTxManager"
 		entity-manager-factory-ref="entityManagerFactory" />
 	
