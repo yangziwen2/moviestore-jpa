@@ -10,6 +10,7 @@
 		<param-value>
 			classpath*:/applicationContext.xml
 			classpath*:/applicationContext-hibernate.xml
+			classpath*:/applicationContext-jpa.xml
 		</param-value>
 	</context-param>
 	<context-param>
