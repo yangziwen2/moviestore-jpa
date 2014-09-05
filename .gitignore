@@ -1,0 +1,8 @@
+target/
+bin/
+src/main/webapp/WEB-INF/classes/
+db/
+.project
+.classpath
+.settings/
+.mymetadata
