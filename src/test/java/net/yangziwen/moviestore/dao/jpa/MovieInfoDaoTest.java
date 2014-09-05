@@ -2,22 +2,27 @@ package net.yangziwen.moviestore.dao.jpa;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import net.yangziwen.moviestore.dao.impl.jpa.IMovieInfoJpaDao;
+import net.yangziwen.moviestore.dao.impl.jpa.MovieInfoJpaDao;
+import net.yangziwen.moviestore.pojo.MovieInfo;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.test.SpringJpaPersistenceTests;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.ui.ModelMap;
 
 public class MovieInfoDaoTest extends SpringJpaPersistenceTests {
 
 	@Autowired
-	private IMovieInfoJpaDao movieInfoJpaDao;
+	private MovieInfoJpaDao movieInfoJpaDao;
 	
 	@Test
 	public void getYearListByWebsite() {
@@ -68,26 +73,26 @@ public class MovieInfoDaoTest extends SpringJpaPersistenceTests {
 		}
 	}
 	
-//	@Test
-//	public void batchSave() {
-//		List<MovieInfo> list = movieInfoJpaDao.list(EMPTY_PARAM);
-//		MovieInfo[] infos = list.toArray(new MovieInfo[]{});
-//		int batchSize = infos.length / 3;
-//		try {
-//			movieInfoJpaDao.batchSave(infos, batchSize);
-//			fail("entities with ids should not be batch saved!");
-//		} catch (Exception e) {
-//			assertTrue(e instanceof IllegalArgumentException);
-//		}
-//		List<MovieInfo> infosToBatchSave = new ArrayList<MovieInfo>(infos.length);
-//		for(MovieInfo info: list) {
-//			MovieInfo newInfo = new MovieInfo();
-//			BeanUtils.copyProperties(info, newInfo);
-//			newInfo.setId(null);
-//			infosToBatchSave.add(newInfo);
-//		}
-//		movieInfoJpaDao.batchSave(infosToBatchSave.toArray(new MovieInfo[]{}), batchSize);
-//		assertEquals(list.size() * 2, movieInfoJpaDao.count(EMPTY_PARAM));
-//	}
+	@Test
+	public void batchSave() {
+		List<MovieInfo> list = movieInfoJpaDao.findAll();
+		MovieInfo[] infos = list.toArray(new MovieInfo[]{});
+		int batchSize = infos.length / 3;
+		try {
+			movieInfoJpaDao.batchSave(infos, batchSize);
+			fail("entities with ids should not be batch saved!");
+		} catch (Exception e) {
+			assertTrue(e instanceof InvalidDataAccessApiUsageException);
+		}
+		List<MovieInfo> infosToBatchSave = new ArrayList<MovieInfo>(infos.length);
+		for(MovieInfo info: list) {
+			MovieInfo newInfo = new MovieInfo();
+			BeanUtils.copyProperties(info, newInfo);
+			newInfo.setId(null);
+			infosToBatchSave.add(newInfo);
+		}
+		movieInfoJpaDao.batchSave(infosToBatchSave.toArray(new MovieInfo[]{}), batchSize);
+		assertEquals(list.size() * 2, movieInfoJpaDao.count());
+	}
 	
 }

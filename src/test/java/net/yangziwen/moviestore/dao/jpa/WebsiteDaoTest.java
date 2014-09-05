@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import net.yangziwen.moviestore.dao.impl.jpa.IWebsiteJpaDao;
+import net.yangziwen.moviestore.dao.impl.jpa.WebsiteJpaDao;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.test.SpringJpaPersistenceTests;
 
@@ -20,7 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 public class WebsiteDaoTest extends SpringJpaPersistenceTests {
 
 	@Autowired
-	private IWebsiteJpaDao websiteJpaDao;
+	private WebsiteJpaDao websiteJpaDao;
 	
 	@Test
 	public void count() {

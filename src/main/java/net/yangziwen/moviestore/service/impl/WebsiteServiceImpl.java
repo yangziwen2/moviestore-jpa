@@ -12,7 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import net.yangziwen.moviestore.dao.base.DaoConstant;
-import net.yangziwen.moviestore.dao.impl.jpa.IWebsiteJpaDao;
+import net.yangziwen.moviestore.dao.impl.jpa.WebsiteJpaDao;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.service.IWebsiteService;
 
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 public class WebsiteServiceImpl implements IWebsiteService {
 	
 	@Autowired
-	private IWebsiteJpaDao websiteJpaDao;
+	private WebsiteJpaDao websiteJpaDao;
 
 	@Override
 	public Website getWebsiteById(Long id) {

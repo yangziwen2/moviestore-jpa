@@ -10,8 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import net.yangziwen.moviestore.dao.IMovieInfoDao;
-import net.yangziwen.moviestore.dao.impl.jpa.IMovieInfoJpaDao;
+import net.yangziwen.moviestore.dao.impl.jpa.MovieInfoJpaDao;
 import net.yangziwen.moviestore.pojo.MovieInfo;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.service.IMovieInfoService;
@@ -29,10 +28,7 @@ import org.springframework.stereotype.Service;
 public class MovieInfoServiceImpl implements IMovieInfoService {
 	
 	@Autowired
-	private IMovieInfoDao movieInfoDao;
-	
-	@Autowired
-	private IMovieInfoJpaDao movieInfoJpaDao;
+	private MovieInfoJpaDao movieInfoJpaDao;
 	
 	@Override
 	public MovieInfo getMovieInfoById(Long id) {
@@ -102,7 +98,7 @@ public class MovieInfoServiceImpl implements IMovieInfoService {
 	
 	@Override
 	public int batchSaveMovieInfo(MovieInfo[] infos, int batchSize) {
-		return movieInfoDao.batchSave(infos, batchSize);
+		return movieInfoJpaDao.batchSave(infos, batchSize);
 	}
 	
 	@Override
