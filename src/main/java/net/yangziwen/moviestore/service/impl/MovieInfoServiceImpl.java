@@ -82,7 +82,7 @@ public class MovieInfoServiceImpl implements IMovieInfoService {
 					.getRestriction();
 			}
 		}, new PageRequest(start / limit, limit));
-		return new Page<MovieInfo>(start, limit, page.getNumber(), page.getContent());
+		return new Page<MovieInfo>(start, limit, Long.valueOf(page.getTotalElements()).intValue(), page.getContent());
 	}
 	
 	@Override
