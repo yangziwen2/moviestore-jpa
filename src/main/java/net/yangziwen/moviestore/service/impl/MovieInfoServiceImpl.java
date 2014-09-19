@@ -42,7 +42,7 @@ public class MovieInfoServiceImpl implements IMovieInfoService {
 
 	@Override
 	public MovieInfo getMovieInfoWithMaxMovieId(Long websiteId) {
-		List<MovieInfo> list = movieInfoJpaDao.findByWebsiteIdOrderByMovieId(websiteId, new PageRequest(0, 1));
+		List<MovieInfo> list = movieInfoJpaDao.findByWebsiteIdOrderByMovieIdDesc(websiteId, new PageRequest(0, 1));
 		return CollectionUtils.isNotEmpty(list)? list.get(0): null;
 	}
 	

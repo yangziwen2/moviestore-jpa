@@ -9,38 +9,36 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface MovieInfoJpaDao extends JpaRepository<MovieInfo, Long>, JpaSpecificationExecutor<MovieInfo>, MovieInfoJpaCustomRepository {
 
-	@Query("from MovieInfo "
-			+ "where websiteId = ?1 "
-			+ "order by movieId desc")
-	public List<MovieInfo> findByWebsiteIdOrderByMovieId(Long websiteId, Pageable pageable);
+	public List<MovieInfo> findByWebsiteIdOrderByMovieIdDesc(Long websiteId, Pageable pageable);
 	
 	@Query("select distinct year "
 			+ "from MovieInfo "
-			+ "where websiteId = ?1 and year is not null "
+			+ "where websiteId = :websiteId and year is not null "
 			+ "order by year desc")
-	public List<String> getYearListByWebsiteId(Long websiteId);
+	public List<String> getYearListByWebsiteId(@Param("websiteId")Long websiteId);
 	
 	@Query("select distinct area "
 			+ "from MovieInfo "
-			+ "where websiteId = ?1 and area is not null "
+			+ "where websiteId = :websiteId and area is not null "
 			+ "group by area "
 			+ "order by count(*) desc")
-	public List<String> getAreaListByWebsiteId(Long websiteId);
+	public List<String> getAreaListByWebsiteId(@Param("websiteId")Long websiteId);
 	
 	@Query("select distinct category "
 			+ "from MovieInfo "
-			+ "where websiteId = ?1 and category is not null "
+			+ "where websiteId = :websiteId and category is not null "
 			+ "group by category "
 			+ "order by count(*) desc")
-	public List<String> getCategoryListByWebsiteId(Long websiteId);
+	public List<String> getCategoryListByWebsiteId(@Param("websiteId")Long websiteId);
 	
 	@Query("select distinct subcategory "
 			+ "from MovieInfo "
-			+ "where websiteId = ?1 and category = ?2 and subcategory is not null "
+			+ "where websiteId = :websiteId and category = :category and subcategory is not null "
 			+ "order by subcategory desc")
-	public List<String> getSubcategoryListByWebsiteIdAndCategory(Long websiteId, String category);
+	public List<String> getSubcategoryListByWebsiteIdAndCategory(@Param("websiteId")Long websiteId, @Param("category")String category);
 	
 }
