@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 @Entity
 @Table(name="movie_info")
 public class MovieInfo extends AbstractModel {
@@ -17,9 +19,11 @@ public class MovieInfo extends AbstractModel {
 	@Id
 	@GeneratedValue
 	@Column
+	@JSONField(serialize = false)
 	private Long id;
 	
 	@Column(name="website_id")
+	@JSONField(serialize = false)
 	private Long websiteId;
 	
 	/**

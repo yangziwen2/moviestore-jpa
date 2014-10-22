@@ -1,5 +1,10 @@
 package net.yangziwen.moviestore.controller;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +25,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.util.IOUtils;
 
 @Controller
 @RequestMapping("/movie")
@@ -95,4 +103,37 @@ public class MovieController {
 		List<String> subcategoryList = movieInfoService.getMovieInfoSubcategoryListByWebsiteAndCategory(website, category);
 		return new ModelMap().addAttribute("success", true).addAttribute("subcategoryList", subcategoryList);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/toJson")
+	public Map<String, Object> toJson(
+			@RequestParam Long websiteId, 
+			@RequestParam(defaultValue = "500") int batchSize, 
+			@RequestParam String destPath) {
+		File destFile = new File(destPath);
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destFile), "UTF-8"));
+			int start = 0;
+			while(true) {
+				List<MovieInfo> list = movieInfoService.getMovieInfoPaginateResult(start, batchSize, new ModelMap("websiteId", websiteId)).getList();
+				for(MovieInfo info: list) {
+					writer.write(JSON.toJSONString(info));
+					writer.write(",\n");
+				}
+				writer.flush();
+				if(list.size() < batchSize) {
+					break;
+				}
+				start += batchSize;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			IOUtils.close(writer);
+		}
+		
+		return new ModelMap("success", true);
+	}
+	
 }
