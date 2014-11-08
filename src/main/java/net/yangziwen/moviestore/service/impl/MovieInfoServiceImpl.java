@@ -1,6 +1,7 @@
 package net.yangziwen.moviestore.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,6 +12,14 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import net.yangziwen.moviestore.dao.MovieInfoJpaDao;
+import net.yangziwen.moviestore.dao.base.DynamicSpecifications;
+import net.yangziwen.moviestore.dao.base.DynamicSpecifications.ClauseEnum;
+import net.yangziwen.moviestore.dao.base.clause.Clause;
+import net.yangziwen.moviestore.dao.base.clause.ConditionClause;
+import net.yangziwen.moviestore.dao.base.clause.OrderByClause;
+import net.yangziwen.moviestore.dao.base.filter.AndFilter;
+import net.yangziwen.moviestore.dao.base.filter.AndFilter.Operator;
+import net.yangziwen.moviestore.dao.base.filter.OrderByFilter;
 import net.yangziwen.moviestore.pojo.MovieInfo;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.service.IMovieInfoService;
@@ -48,6 +57,40 @@ public class MovieInfoServiceImpl implements IMovieInfoService {
 	
 	@Override
 	public Page<MovieInfo> getMovieInfoPaginateResult(int start, int limit, final Map<String, Object> param) {
+		Specification<MovieInfo> specification = DynamicSpecifications.bySearchParam(param);
+		org.springframework.data.domain.Page<MovieInfo> jpaPage = 
+				movieInfoJpaDao.findAll(specification, new PageRequest(start / limit, limit));
+		return Page.transform(jpaPage);
+	}
+	
+	@Deprecated
+	public Page<MovieInfo> getMovieInfoPaginateResult1(int start, int limit, final Map<String, Object> param) {
+		Map<ClauseEnum, Clause<MovieInfo>> clauseMap = new HashMap<ClauseEnum, Clause<MovieInfo>>();
+		ConditionClause<MovieInfo> whereClause = new ConditionClause<MovieInfo>();
+		for(Entry<String, Object> entry: param.entrySet()) {
+			String[] arr = entry.getKey().split("__");
+			if(arr.length < 2) {
+				continue;
+			}
+			try {
+				whereClause.and(new AndFilter(arr[0], Operator.valueOf(arr[1]), entry.getValue()));
+			} catch (Exception e) {
+			}
+		}
+		clauseMap.put(ClauseEnum.WHERE_CLAUSE, whereClause);
+		
+		OrderByClause<MovieInfo> orderByClause = new OrderByClause<MovieInfo>();
+		orderByClause.order(new OrderByFilter("movieId", true));
+		clauseMap.put(ClauseEnum.ORDER_BY_CLAUSE, orderByClause);
+		
+		Specification<MovieInfo> specification = DynamicSpecifications.bySearchFilter(clauseMap);
+		
+		org.springframework.data.domain.Page<MovieInfo> jpaPage =  movieInfoJpaDao.findAll(specification, new PageRequest(start / limit, limit));
+		return Page.transform(jpaPage);
+	}
+	
+	@Deprecated
+	public Page<MovieInfo> getMovieInfoPaginateResult2(int start, int limit, final Map<String, Object> param) {
 		org.springframework.data.domain.Page<MovieInfo> jpaPage =  movieInfoJpaDao.findAll(new Specification<MovieInfo>() {
 			@Override
 			public Predicate toPredicate(Root<MovieInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {

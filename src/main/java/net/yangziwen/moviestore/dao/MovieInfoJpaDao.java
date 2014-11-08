@@ -2,16 +2,15 @@ package net.yangziwen.moviestore.dao;
 
 import java.util.List;
 
+import net.yangziwen.moviestore.dao.base.BaseRepository;
 import net.yangziwen.moviestore.dao.custom.MovieInfoJpaCustomRepository;
 import net.yangziwen.moviestore.pojo.MovieInfo;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface MovieInfoJpaDao extends JpaRepository<MovieInfo, Long>, JpaSpecificationExecutor<MovieInfo>, MovieInfoJpaCustomRepository {
+public interface MovieInfoJpaDao extends BaseRepository<MovieInfo, Long>, MovieInfoJpaCustomRepository {
 
 	public List<MovieInfo> findByWebsiteIdOrderByMovieIdDesc(Long websiteId, Pageable pageable);
 	

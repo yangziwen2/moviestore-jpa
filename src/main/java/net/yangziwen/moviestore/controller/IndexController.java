@@ -1,7 +1,7 @@
 package net.yangziwen.moviestore.controller;
 
+import net.yangziwen.moviestore.dao.base.DaoConstant;
 import net.yangziwen.moviestore.service.IWebsiteService;
-import net.yangziwen.moviestore.util.DaoConstant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

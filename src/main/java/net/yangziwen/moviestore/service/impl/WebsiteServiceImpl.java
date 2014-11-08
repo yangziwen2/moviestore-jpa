@@ -12,9 +12,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import net.yangziwen.moviestore.dao.WebsiteJpaDao;
+import net.yangziwen.moviestore.dao.base.DaoConstant;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.service.IWebsiteService;
-import net.yangziwen.moviestore.util.DaoConstant;
 
 import org.hibernate.ejb.criteria.OrderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
