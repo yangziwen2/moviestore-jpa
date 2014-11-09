@@ -5,9 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name="website")
+@XmlRootElement
 public class Website extends AbstractModel {
 	
 	private static final String MOVIE_ID_PLACEHOLDER = "${movieId}";
@@ -40,6 +43,7 @@ public class Website extends AbstractModel {
 	
 	public Website() {}
 	
+	@XmlAttribute
 	public Long getId() {
 		return id;
 	}

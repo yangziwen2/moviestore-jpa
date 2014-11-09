@@ -5,11 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
 @Entity
 @Table(name="movie_info")
+@XmlRootElement
 public class MovieInfo extends AbstractModel {
 	
 	public static final MovieInfo INVALID_INFO = new MovieInfo();
@@ -55,6 +58,7 @@ public class MovieInfo extends AbstractModel {
 	
 	public MovieInfo() {}
 	
+	@XmlAttribute
 	public Long getId() {
 		return id;
 	}
