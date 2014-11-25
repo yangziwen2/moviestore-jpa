@@ -51,8 +51,12 @@ public class DynamicSpecifications {
 		return new Specification<T>() {
 			@Override
 			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-				whereClause.fillToQuery(root, query, builder);
-				orderByClause.fillToQuery(root, query, builder);
+				if(whereClause != null) {
+					whereClause.fillToQuery(root, query, builder);
+				}
+				if(orderByClause != null) {
+					orderByClause.fillToQuery(root, query, builder);
+				}
 				return query.getRestriction();
 			}
 		};
@@ -61,8 +65,9 @@ public class DynamicSpecifications {
 	private static <T> ConditionClause<T> buildWhereClauseByParams(Map<String, Object> params) {
 		ConditionClause<T> whereClause = new ConditionClause<T>();
 		for(Entry<String, Object> entry: params.entrySet()) {
-			if(entry.getKey().contains(DaoConstant.ORDER_BY)) {
+			if(entry.getKey().endsWith(DaoConstant.OR)) {
 				whereClause.or(buildOrFilter((Map<String, Object>)entry.getValue()));
+				continue;
 			}
 			AndFilter andFilter = buildAndFilter(entry.getKey(), entry.getValue());
 			if(andFilter == null) {

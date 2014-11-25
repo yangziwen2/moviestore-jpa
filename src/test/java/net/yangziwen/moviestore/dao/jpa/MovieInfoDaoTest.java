@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.yangziwen.moviestore.dao.MovieInfoJpaDao;
+import net.yangziwen.moviestore.dao.base.DynamicSpecifications;
 import net.yangziwen.moviestore.pojo.MovieInfo;
 import net.yangziwen.moviestore.pojo.Website;
 import net.yangziwen.moviestore.test.SpringJpaPersistenceTests;
@@ -38,6 +39,23 @@ public class MovieInfoDaoTest extends SpringJpaPersistenceTests {
 			String year2 = yearList.get(i + 1);
 			assertEquals(1, year1.compareTo(year2));	// yearList是倒序的
 		}
+	}
+	
+	@Test
+	public void getMovieInfoByTitleOrArea() {
+		int expectedSize = jdbcTemplate.queryForObject(
+				"select count(*) from movie_info where title like :title or area = :area and year < :year", 
+				new ModelMap().addAttribute("title", "十月%").addAttribute("area", "日本").addAttribute("year", 2014), 
+				Integer.class);
+		
+		List<MovieInfo> list = movieInfoJpaDao.findAll((DynamicSpecifications.<MovieInfo>bySearchParam(new ModelMap()
+			.addAttribute("1__or", new ModelMap()
+				.addAttribute("title__start_with", "十月")
+				.addAttribute("area", "日本")
+			)
+			.addAttribute("year__lt", 2014)
+		)));
+		assertEquals(expectedSize, list.size());
 	}
 	
 	@Test
